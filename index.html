@@ -1,375 +1,58 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Core Vault V2</title>
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>CORE VAULT</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
-
 <body>
-
-<!-- صفحه ورود -->
-
-<div id="auth-screen">
-
+  <div id="auth-screen">
     <div class="login-box glass">
-
-        <h1>CORE VAULT</h1>
-
-        <input
-            type="password"
-            id="master-pass"
-            placeholder="رمز عبور">
-
-        <button id="login-btn">
-            ورود
-        </button>
-
+      <h1 class="glitch" data-text="CORE VAULT">CORE VAULT</h1>
+      <input type="password" id="master-pass" placeholder="رمز عبور" autocomplete="off"
+             onkeydown="if(event.key==='Enter') authenticate()">
+      <button onclick="authenticate()" class="neon-btn">ورود</button>
+      <p style="margin-top:20px;color:#888;">حالت مهمان (فقط خواندنی)</p>
+      <button onclick="guestLogin()" style="background:transparent;border:1px solid #888;color:#888;padding:10px 30px;border-radius:50px;cursor:pointer;">ورود مهمان</button>
     </div>
+  </div>
 
-</div>
-
-<!-- برنامه -->
-
-<div id="app" class="hidden">
-
-    <!-- نوار بالا -->
-
+  <div id="app" class="hidden">
     <header class="titlebar glass">
-
-        <div class="logo">
-            CORE VAULT
-        </div>
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="global-search"
-                placeholder="جستجو...">
-
-        </div>
-
+      <div class="logo glitch" data-text="⚡ CORE VAULT">⚡ CORE VAULT</div>
+      <div class="search-box">
+        <input type="text" id="global-search" placeholder="جستجوی هوشمند..." oninput="performSearch(this.value)">
+      </div>
     </header>
 
     <div class="layout">
-
-        <!-- منو -->
-
-        <aside class="sidebar glass">
-
-            <button data-page="dashboard">
-                داشبورد
-            </button>
-
-            <button data-page="people">
-                افراد
-            </button>
-
-            <button data-page="relations">
-                ارتباطات
-            </button>
-
-            <button data-page="vehicles">
-                خودروها
-            </button>
-
-            <button data-page="properties">
-                املاک
-            </button>
-
-            <button data-page="documents">
-                مدارک
-            </button>
-
-            <button data-page="gallery">
-                گالری
-            </button>
-
-            <button data-page="timeline">
-                تایم لاین
-            </button>
-
-            <button data-page="settings">
-                تنظیمات
-            </button>
-
-        </aside>
-
-        <!-- محتوا -->
-
-        <main class="main glass">
-
-            <!-- داشبورد -->
-
-            <section
-                id="dashboard"
-                class="page">
-
-                <h2>
-                    داشبورد
-                </h2>
-
-                <div class="stats-grid">
-
-                    <div class="stat-card">
-                        <h3 id="people-count">
-                            0
-                        </h3>
-                        <p>افراد</p>
-                    </div>
-
-                    <div class="stat-card">
-                        <h3 id="vehicle-count">
-                            0
-                        </h3>
-                        <p>خودروها</p>
-                    </div>
-
-                    <div class="stat-card">
-                        <h3 id="property-count">
-                            0
-                        </h3>
-                        <p>املاک</p>
-                    </div>
-
-                    <div class="stat-card">
-                        <h3 id="document-count">
-                            0
-                        </h3>
-                        <p>مدارک</p>
-                    </div>
-
-                </div>
-
-            </section>
-
-            <!-- افراد -->
-
-            <section
-                id="people"
-                class="page hidden">
-
-                <h2>
-                    مدیریت افراد
-                </h2>
-
-                <form id="person-form">
-
-                    <div class="grid-2">
-
-                        <input
-                            id="first-name"
-                            placeholder="نام">
-
-                        <input
-                            id="last-name"
-                            placeholder="نام خانوادگی">
-
-                        <input
-                            id="national-id"
-                            placeholder="کد ملی">
-
-                        <input
-                            id="phone"
-                            placeholder="شماره تماس">
-
-                        <input
-                            id="birth-date"
-                            type="date">
-
-                        <input
-                            id="job"
-                            placeholder="شغل">
-
-                    </div>
-
-                    <textarea
-                        id="address"
-                        placeholder="آدرس">
-                    </textarea>
-
-                    <button
-                        type="submit">
-                        ذخیره
-                    </button>
-
-                </form>
-
-                <div id="people-list">
-                </div>
-
-            </section>
-
-            <!-- ارتباطات -->
-
-            <section
-                id="relations"
-                class="page hidden">
-
-                <h2>
-                    ارتباط افراد
-                </h2>
-
-                <div class="grid-2">
-
-                    <select id="rel-from">
-                    </select>
-
-                    <select id="rel-to">
-                    </select>
-
-                </div>
-
-                <select id="rel-type">
-
-                    <option>
-                        دوست
-                    </option>
-
-                    <option>
-                        فامیل
-                    </option>
-
-                    <option>
-                        همکار
-                    </option>
-
-                    <option>
-                        همسایه
-                    </option>
-
-                    <option>
-                        پدر
-                    </option>
-
-                    <option>
-                        مادر
-                    </option>
-
-                </select>
-
-                <button id="save-relation">
-
-                    ذخیره ارتباط
-
-                </button>
-
-                <div id="relations-list">
-                </div>
-
-            </section>
-
-            <!-- خودرو -->
-
-            <section
-                id="vehicles"
-                class="page hidden">
-
-                <h2>
-                    خودروها
-                </h2>
-
-                <div id="vehicles-list">
-                </div>
-
-            </section>
-
-            <!-- املاک -->
-
-            <section
-                id="properties"
-                class="page hidden">
-
-                <h2>
-                    املاک
-                </h2>
-
-                <div id="properties-list">
-                </div>
-
-            </section>
-
-            <!-- مدارک -->
-
-            <section
-                id="documents"
-                class="page hidden">
-
-                <h2>
-                    مدارک
-                </h2>
-
-                <div id="documents-list">
-                </div>
-
-            </section>
-
-            <!-- گالری -->
-
-            <section
-                id="gallery"
-                class="page hidden">
-
-                <h2>
-                    گالری
-                </h2>
-
-                <input
-                    type="file"
-                    multiple
-                    id="gallery-upload">
-
-                <div id="gallery-grid">
-                </div>
-
-            </section>
-
-            <!-- تایم لاین -->
-
-            <section
-                id="timeline"
-                class="page hidden">
-
-                <h2>
-                    تایم لاین
-                </h2>
-
-                <div id="timeline-list">
-                </div>
-
-            </section>
-
-            <!-- تنظیمات -->
-
-            <section
-                id="settings"
-                class="page hidden">
-
-                <h2>
-                    تنظیمات
-                </h2>
-
-                <button id="export-btn">
-                    خروجی
-                </button>
-
-                <button id="import-btn">
-                    ورودی
-                </button>
-
-            </section>
-
-        </main>
-
+      <aside class="sidebar glass">
+        <button onclick="switchView('people')">👤 افراد</button>
+        <button onclick="switchView('houses')">🏠 خانه‌ها</button>
+        <button onclick="switchView('cars')">🚗 خودروها</button>
+        <button onclick="switchView('family')">👨‍👩‍👧 خانواده</button>
+        <button onclick="switchView('timeline')">⏳ تایم‌لاین</button>
+        <button onclick="switchView('dashboard')">📊 داشبورد</button>
+        <button onclick="switchView('gallery')">🖼️ گالری</button>
+        <button onclick="switchView('settings')">⚙️ تنظیمات</button>
+        <button onclick="switchView('compare')">⚖️ مقایسه</button>
+        <button onclick="exportBackup()">💾 پشتیبان</button>
+        <button onclick="importBackup()">📥 بازیابی</button>
+      </aside>
+
+      <main class="main glass" id="view-container"></main>
     </div>
+  </div>
 
-</div>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+    }
+  </script>
 </body>
 </html>
