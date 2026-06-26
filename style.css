@@ -1,0 +1,184 @@
+/* ============ فونت محلی ============ */
+@font-face {
+  font-family: 'IRAN Rounded';
+  src: url('fonts/IRAN-Rounded.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============ متغیرها و پایه ============ */
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #0A0A0A;
+  --text: #e0e0e0;
+  --accent: #00ff66;
+  --accent2: #00cc44;
+  --glass-bg: rgba(20, 20, 20, 0.6);
+  --border: rgba(0, 255, 102, 0.2);
+  --hover-bg: rgba(0, 255, 102, 0.08);
+  --radius: 24px;
+}
+
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'IRAN Rounded', 'Segoe UI', Tahoma, sans-serif;
+  overflow-x: hidden; min-height: 100vh; position: relative;
+}
+body::before {
+  content:""; position:fixed; top:0; left:0; width:100%; height:100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size:30px 30px; pointer-events:none; z-index:0;
+}
+body::after {
+  content:""; position:fixed; top:0; left:0; width:100%; height:100%;
+  background: repeating-linear-gradient(0deg, rgba(0,255,102,0.02) 0, rgba(0,255,102,0.02) 2px, transparent 2px, transparent 6px);
+  pointer-events:none; z-index:9999; animation: scan 8s linear infinite;
+}
+@keyframes scan { 0%{ transform:translateY(-100%); } 100%{ transform:translateY(100%); } }
+
+.hidden { display: none !important; }
+.glass {
+  background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* ============ ورود ============ */
+#auth-screen { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; background: var(--bg); z-index:10000; }
+.login-box { padding: 60px 40px; text-align:center; width:360px; animation: float 5s ease-in-out infinite; }
+@keyframes float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
+.login-box h1 { font-size: 3rem; font-weight:900; letter-spacing:6px; margin-bottom:30px; color: var(--accent); text-shadow:0 0 20px var(--accent); }
+.glitch { position:relative; }
+.glitch::before, .glitch::after {
+  content: attr(data-text); position: absolute; top:0; right:0; color: var(--accent); background: var(--bg);
+  overflow: hidden; clip: rect(0,0,0,0);
+}
+.glitch::before { left:2px; text-shadow:-2px 0 red; animation: glitch-anim 2s infinite linear alternate-reverse; }
+.glitch::after  { left:-2px; text-shadow:2px 0 blue; animation: glitch-anim 3s infinite linear alternate; }
+@keyframes glitch-anim {
+  0%{clip:rect(30px,9999px,90px,0)} 20%{clip:rect(10px,9999px,50px,0)} 40%{clip:rect(80px,9999px,100px,0)}
+  60%{clip:rect(20px,9999px,70px,0)} 80%{clip:rect(5px,9999px,40px,0)} 100%{clip:rect(60px,9999px,95px,0)}
+}
+.login-box input { background: rgba(0,0,0,0.7); border:1px solid var(--accent); color: var(--accent); padding: 16px; font-size:1rem; margin:20px 0; width:100%; text-align:center; border-radius:50px; outline:none; transition:0.3s; }
+.login-box input:focus { box-shadow:0 0 25px var(--accent); }
+.neon-btn { background: transparent; border:1px solid var(--accent); color: var(--accent); padding: 16px 50px; font-weight:bold; border-radius:50px; cursor:pointer; font-size:1.1rem; letter-spacing:3px; transition:0.3s; margin-top:15px; }
+.neon-btn:hover { background: var(--hover-bg); box-shadow:0 0 25px var(--accent); }
+
+/* ============ چیدمان اصلی ============ */
+#app { padding:20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:18px 25px; margin-bottom:20px; flex-wrap:wrap; gap:15px; }
+.logo { font-size:1.8rem; font-weight:900; color:var(--accent); letter-spacing:3px; }
+.search-box input { background: rgba(0,0,0,0.6); border:1px solid var(--accent); color: var(--accent); padding:12px 20px; border-radius:50px; width:220px; font-size:1rem; backdrop-filter:blur(5px); transition:0.3s; }
+.search-box input:focus { box-shadow:0 0 20px var(--accent); }
+.status { color:var(--accent); font-weight:bold; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.4; } }
+
+.layout { display:flex; gap:20px; }
+.sidebar { width:220px; padding:20px; display:flex; flex-direction:column; gap:8px; flex-shrink:0; align-self:flex-start; }
+.sidebar button { background: transparent; border:1px solid rgba(255,255,255,0.1); color:#ccc; padding:14px 12px; text-align:right; font-size:1rem; border-radius:14px; cursor:pointer; transition:0.3s; font-weight:500; }
+.sidebar button:hover { border-color:var(--accent); color:var(--accent); box-shadow:0 0 15px var(--accent); }
+.main { flex:1; padding:25px; min-height:75vh; }
+
+/* ============ کارت ملی افراد ============ */
+.id-card {
+  display: flex; align-items: center; gap: 15px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 1px solid var(--accent); border-radius: 16px;
+  padding: 15px; color: #fff; margin-bottom: 15px; transition: all 0.3s;
+}
+.id-card:hover { transform: translateY(-3px); box-shadow: 0 0 25px var(--accent); }
+.id-card img {
+  width: 70px; height: 70px; border-radius: 50%;
+  border: 2px solid var(--accent); object-fit: cover;
+  margin: 0 !important; float: none !important;
+}
+
+/* ============ فرم‌ها ============ */
+input, select, textarea {
+  background: rgba(0,0,0,0.7); border:1px solid var(--accent); color: var(--text);
+  padding:12px 16px; border-radius:14px; font-size:0.95rem; margin:5px 0; width:100%; transition:0.3s; font-family:inherit;
+}
+input:focus, select:focus, textarea:focus { box-shadow:0 0 10px var(--accent); outline:none; }
+.primary {
+  background: var(--accent); color: var(--bg); font-weight:bold; border:none;
+  padding:14px 28px; border-radius:30px; cursor:pointer; font-size:1rem; transition:0.3s;
+}
+.primary:hover { box-shadow:0 0 20px var(--accent); }
+.grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.field-custom { display:flex; gap:10px; align-items:center; margin:5px 0; }
+
+/* ============ دکمه شیشه‌ای ============ */
+.btn-glass {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: var(--text); padding: 10px 18px; border-radius: 14px;
+  cursor: pointer; font-size: 0.9rem; transition: 0.3s;
+  backdrop-filter: blur(10px); display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-glass:hover { background: var(--hover-bg); border-color: var(--accent); color: var(--accent); }
+
+/* ============ تب‌ها ============ */
+.tab-btn {
+  flex:1; padding:10px 8px; border:none; background:transparent; color:#a0a0b8;
+  border-radius:12px; cursor:pointer; font-size:0.85rem; font-weight:600; transition: all 0.3s; font-family:inherit; text-align:center;
+}
+.tab-btn.active { background: rgba(0,255,102,0.15); color:#fff; box-shadow: 0 4px 20px rgba(0,255,102,0.25); }
+.tab-btn:hover:not(.active) { background: rgba(255,255,255,0.05); color:#ccc; }
+
+/* ============ مودال ============ */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:10001; display:flex; align-items:center; justify-content:center; }
+.modal-content { width:90%; max-width:600px; max-height:85vh; overflow-y:auto; padding:25px; animation: modalSlide 0.3s ease; }
+@keyframes modalSlide { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+.info-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+.info-label { font-weight:bold; color:var(--accent); min-width:100px; }
+.info-value { color:var(--text); text-align:left; flex:1; margin-right:10px; }
+
+/* ============ پلاک ============ */
+.plate-formatted { letter-spacing:1px; word-spacing:2px; }
+.plate-inputs { display:flex; gap:5px; align-items:center; }
+.plate-inputs input { width:60px; text-align:center; }
+
+/* ============ امضا ============ */
+.signature-canvas { border:1px solid var(--accent); border-radius:8px; cursor:crosshair; width:100%; height:100px; }
+
+/* ============ اعمال فونت روی همه چیز ============ */
+button, input, select, textarea, .card, .sidebar button,
+.topbar, .search-box input, .section-title, .kpi, .id-card,
+.modal-content, .info-row, .tab-btn, .btn-glass, .primary,
+.neon-btn, .login-box input, .login-box h1, .bank-card, .id-details span {
+  font-family: 'IRAN Rounded', 'Segoe UI', Tahoma, sans-serif !important;
+}
+
+/* ============ تم‌های جذاب (فقط رنگ و حس) ============ */
+body.hacker { --accent: #00ff66; --accent2: #00cc44; --border: rgba(0,255,102,0.2); --hover-bg: rgba(0,255,102,0.08); }
+body.hacker .primary { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+body.hacker .primary:hover { background: var(--accent); color: #000; }
+
+body.gold { --accent: #D4AF37; --accent2: #B8860B; --border: rgba(212,175,55,0.3); --hover-bg: rgba(212,175,55,0.08); }
+body.gold .primary { background: linear-gradient(135deg, #D4AF37, #B8860B); color: #000; }
+
+body.blue { --accent: #00aaff; --accent2: #0088dd; --border: rgba(0,170,255,0.3); --hover-bg: rgba(0,170,255,0.08); }
+body.blue .primary { background: rgba(0,170,255,0.2); border: 1px solid rgba(0,170,255,0.5); color: #00aaff; }
+body.blue .primary:hover { background: #00aaff; color: #000; }
+
+body.red { --accent: #ff4444; --accent2: #cc0000; --border: rgba(255,68,68,0.3); --hover-bg: rgba(255,68,68,0.08); }
+body.red .primary { background: #ff4444; color: #000; }
+
+body.purple { --accent: #cc44ff; --accent2: #9900dd; --border: rgba(204,68,255,0.3); --hover-bg: rgba(204,68,255,0.08); }
+body.purple .primary { background: rgba(204,68,255,0.2); border: 1px solid rgba(204,68,255,0.5); color: #cc44ff; }
+body.purple .primary:hover { background: #cc44ff; color: #000; }
+
+body.space {
+  --accent: #9d4edd; --accent2: #7b2cbf; --border: rgba(157,78,221,0.3); --hover-bg: rgba(157,78,221,0.15);
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+body.space .primary { background: linear-gradient(135deg, #7b2cbf, #9d4edd); color: #fff; }
+
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .sidebar { width:100%; flex-direction:row; flex-wrap:wrap; }
+  .sidebar button { flex:1; }
+  .grid-2 { grid-template-columns: 1fr; }
+}

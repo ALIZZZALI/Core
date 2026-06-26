@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>CORE VAULT</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+</head>
+<body>
+  <div id="auth-screen">
+    <div class="login-box glass">
+      <h1 class="glitch" data-text="CORE VAULT">CORE VAULT</h1>
+      <input type="password" id="master-pass" placeholder="رمز عبور" autocomplete="off">
+      <button onclick="authenticate()" class="neon-btn">ورود</button>
+      <p style="margin-top:20px;color:#888;">حالت مهمان (فقط خواندنی)</p>
+      <button onclick="guestLogin()" style="background:transparent;border:1px solid #888;color:#888;padding:10px 30px;border-radius:50px;cursor:pointer;">ورود مهمان</button>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <header class="topbar glass">
+      <div class="logo glitch" data-text="⚡ CORE VAULT">⚡ CORE VAULT</div>
+      <div class="search-box">
+        <input type="text" id="global-search" placeholder="جستجوی هوشمند..." oninput="performSearch(this.value)">
+      </div>
+      <div class="status pulse">● فعال</div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar glass">
+        <button onclick="switchView('people')">👤 افراد</button>
+        <button onclick="switchView('houses')">🏠 خانه‌ها</button>
+        <button onclick="switchView('cars')">🚗 خودروها</button>
+        <button onclick="switchView('family')">👨‍👩‍👧 خانواده</button>
+        <button onclick="switchView('timeline')">⏳ تایم‌لاین</button>
+        <button onclick="switchView('dashboard')">📊 داشبورد</button>
+        <button onclick="switchView('gallery')">🖼️ گالری</button>
+        <button onclick="switchView('settings')">⚙️ تنظیمات</button>
+        <button onclick="switchView('compare')">⚖️ مقایسه</button>
+        <button onclick="exportBackup()">💾 پشتیبان</button>
+        <button onclick="importBackup()">📥 بازیابی</button>
+      </aside>
+
+      <main class="main glass" id="view-container"></main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+    }
+  </script>
+</body>
+</html>
